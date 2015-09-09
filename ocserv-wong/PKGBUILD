@@ -1,0 +1,45 @@
+# Modified by: Syrone Wong <wong.syrone@gmail.com>
+# Maintainer: Brian Bidulock <bidulock@openss7.org>
+pkgname=ocserv-wong
+pkgver=0.10.8
+pkgrel=1
+pkgdesc="OpenConnect VPN Server"
+arch=('i686' 'x86_64')
+url="http://www.infradead.org/ocserv/"
+license=('GPL2')
+# libsystemd not needed since we're using Systemd.
+# make sure you have 'base' and 'base-devel' group installed properly
+## use self downgraded autogen 5.18.4 to escape from autogen error at configure time.
+depends=('autogen=5.18.4' 'libpcl' 'gnutls' 'http-parser' 'libnl' 'pam' 'protobuf-c' 'talloc' 'libseccomp' 'freeradius-client' 'lz4' 'libtasn1')
+makedepends=('freeradius')
+backup=('etc/ocserv.config' 'etc/ocserv-passwd')
+source=("ftp://ftp.infradead.org/pub/ocserv/ocserv-$pkgver.tar.xz"
+        #"ftp://ftp.infradead.org/pub/ocserv/ocserv-$pkgver.tar.xz.sig"
+        "remove-pam-config.patch")
+sha256sums=('af989f27585d3567221ffc40babbb383bcd0ca6879e52bbcdee6ac3a90608454'
+            #'SKIP'
+            '6400ff5ecc2e614197585c2c2c84c5db223a71af12a72c374406e095d680126b')
+# Don't know how to find pgp key fingerprint
+#validpgpkeys=() #PGP key 96865171, from http://www.infradead.org/ocserv/download.html
+_realpkgname=ocserv
+prepare() {
+  cd ${_realpkgname}-${pkgver}
+  #patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
+  ## remove pam accounting method from config file
+  ## commit: edba5fc23e0088dbe270b464a0029a27d7b893b1
+  patch -p1 -i "$srcdir/remove-pam-config.patch"
+}
+
+build() {
+  cd ${_realpkgname}-${pkgver}
+  ./configure --prefix=/usr --sysconfdir=/etc --sbindir=/usr/bin
+  make -j"$(nproc)"
+}
+
+package() {
+  cd ${_realpkgname}-${pkgver}
+  make DESTDIR="$pkgdir" install
+  install -Dm0644 doc/sample.config "$pkgdir/etc/ocserv.config"
+  install -Dm0600 doc/sample.passwd "$pkgdir/etc/ocserv-passwd"
+  install -Dm0644 doc/systemd/standalone/ocserv.service "$pkgdir/usr/lib/systemd/system/ocserv.service"
+}
