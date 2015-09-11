@@ -2,7 +2,7 @@
 # Maintainer: Brian Bidulock <bidulock@openss7.org>
 pkgname=ocserv-wong
 pkgver=0.10.8
-pkgrel=1
+pkgrel=2
 pkgdesc="OpenConnect VPN Server"
 arch=('i686' 'x86_64')
 url="http://www.infradead.org/ocserv/"
