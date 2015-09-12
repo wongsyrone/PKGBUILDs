@@ -7,6 +7,8 @@ pkgdesc="OpenConnect VPN Server"
 arch=('i686' 'x86_64')
 url="http://www.infradead.org/ocserv/"
 license=('GPL2')
+provides=('ocserv')
+conflicts=('ocserv')
 # libsystemd not needed since we're using Systemd.
 # make sure you have 'base' and 'base-devel' group installed properly
 ## use self downgraded autogen 5.18.4 to escape from autogen error at configure time.
