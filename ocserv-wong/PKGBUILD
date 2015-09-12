@@ -2,7 +2,7 @@
 # Maintainer: Brian Bidulock <bidulock@openss7.org>
 pkgname=ocserv-wong
 pkgver=0.10.8
-pkgrel=2
+pkgrel=3
 pkgdesc="OpenConnect VPN Server"
 arch=('i686' 'x86_64')
 url="http://www.infradead.org/ocserv/"
@@ -15,10 +15,12 @@ makedepends=('freeradius')
 backup=('etc/ocserv/ocserv.conf' 'etc/ocserv/ocpasswd')
 source=("ftp://ftp.infradead.org/pub/ocserv/ocserv-$pkgver.tar.xz"
         #"ftp://ftp.infradead.org/pub/ocserv/ocserv-$pkgver.tar.xz.sig"
-        "remove-pam-config.patch")
+        "remove-pam-config.patch"
+        "auto-sort-server-cert.patch")
 sha256sums=('af989f27585d3567221ffc40babbb383bcd0ca6879e52bbcdee6ac3a90608454'
             #'SKIP'
-            '6400ff5ecc2e614197585c2c2c84c5db223a71af12a72c374406e095d680126b')
+            '6400ff5ecc2e614197585c2c2c84c5db223a71af12a72c374406e095d680126b'
+            '85595e3d44f4b710023a29dbacbc053bce35f846e5d8df68d8bfd32648e3e2e2')
 # Don't know how to find pgp key fingerprint
 #validpgpkeys=() #PGP key 96865171, from http://www.infradead.org/ocserv/download.html
 _realpkgname=ocserv
@@ -28,6 +30,7 @@ prepare() {
   ## remove pam accounting method from config file
   ## commit: edba5fc23e0088dbe270b464a0029a27d7b893b1
   patch -p1 -i "$srcdir/remove-pam-config.patch"
+  patch -p1 -i "$srcdir/auto-sort-server-cert.patch"
 }
 
 build() {
