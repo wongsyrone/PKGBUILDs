@@ -10,7 +10,7 @@ license=('GPL2')
 # libsystemd not needed since we're using Systemd.
 # make sure you have 'base' and 'base-devel' group installed properly
 ## use self downgraded autogen 5.18.4 to escape from autogen error at configure time.
-depends=('autogen=5.18.4' 'libpcl' 'gnutls' 'http-parser' 'libnl' 'pam' 'protobuf-c' 'talloc' 'libseccomp' 'freeradius-client' 'lz4' 'libtasn1')
+depends=('autogen<=5.18.4' 'libpcl' 'gnutls>=3.4' 'http-parser' 'protobuf-c' 'talloc' 'freeradius-client')
 makedepends=('freeradius')
 backup=('etc/ocserv/ocserv.conf' 'etc/ocserv/ocpasswd')
 source=("ftp://ftp.infradead.org/pub/ocserv/ocserv-$pkgver.tar.xz"
