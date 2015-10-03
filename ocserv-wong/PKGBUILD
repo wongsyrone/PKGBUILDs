@@ -2,7 +2,7 @@
 # Maintainer: Brian Bidulock <bidulock@openss7.org>
 pkgname=ocserv-wong
 pkgver=0.10.8
-pkgrel=3
+pkgrel=4
 pkgdesc="OpenConnect VPN Server"
 arch=('i686' 'x86_64')
 url="http://www.infradead.org/ocserv/"
@@ -11,8 +11,7 @@ provides=('ocserv')
 conflicts=('ocserv')
 # libsystemd not needed since we're using Systemd.
 # make sure you have 'base' and 'base-devel' group installed properly
-## use self downgraded autogen 5.18.4 to escape from autogen error at configure time.
-depends=('autogen<=5.18.4' 'libpcl' 'gnutls>=3.4' 'http-parser' 'protobuf-c' 'talloc' 'freeradius-client')
+depends=('autogen>=5.18.6' 'libpcl' 'gnutls>=3.4' 'http-parser' 'protobuf-c' 'talloc' 'freeradius-client')
 makedepends=('freeradius')
 backup=('etc/ocserv/ocserv.conf' 'etc/ocserv/ocpasswd')
 source=("ftp://ftp.infradead.org/pub/ocserv/ocserv-$pkgver.tar.xz"
